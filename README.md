@@ -1,1 +1,2 @@
 # fancy-weather
+index.html

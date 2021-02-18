@@ -57,7 +57,7 @@ function getDayToday() {
 }
 
 function getWeatherToday(lat, lon) {
-    const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=${language}&units=${units}&appid=9857b81397a6e8ba65a89d8219f81bdf`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=${language}&units=${units}&appid=9857b81397a6e8ba65a89d8219f81bdf`;
     return fetchRequest(url)
         .then(data => {
             console.log(data)

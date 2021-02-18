@@ -1,0 +1,246 @@
+html {
+    box-sizing: border-box;
+    font-size: 10px;
+}
+
+*,
+::before,
+::after {
+    margin: 0;
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    padding: 40px 90px 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #FFFFFF;
+    text-transform: uppercase;
+
+    background-color: #333333;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+img {
+    width: 100%;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.lower_case {
+    text-transform: initial;
+}
+
+.overlay {
+    position: fixed; 
+    width: 100%; 
+    height: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3); 
+    z-index: -2; 
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    min-width: 260px;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    background-color: rgba(174, 181, 185, .5);
+    border-radius: 5px;
+}
+
+.control button {
+    position: relative;
+    display: flex;
+    min-width: 45px;
+    height: 100%;
+    padding: 13px;
+    font-family: inherit;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #FFFFFF;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.control button:hover,
+.control button:disabled {
+    background-color: rgba(174, 181, 185, .5);
+    border-radius: 5px;
+}
+
+.update::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -15%;
+    background-image: url(./assets/Group\ 30.png);
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+}
+
+.search-area {
+    min-width: 195px;
+    width: 70%;
+    height: 100%;
+    padding: 5px 7px;
+    background-color: rgba(76, 82, 85, .4);
+    border: 1px solid rgba(228, 227, 227, 0.2);
+    border-radius: 5px;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 14px;
+    color: #FFFFFF;
+    outline: none;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: auto 0;
+}
+
+article {
+    min-width: 41.6vw;
+}
+
+.location {
+    margin-bottom: 10px;
+    font-size: 3.05vw;
+}
+
+.date {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-transform: initial;
+}
+
+.weather-today {
+    display: flex;
+    align-items: flex-end;
+    padding: 75px 0;
+}
+
+.temperature {
+    position: relative;
+    font-size: 30.6rem;
+    line-height: 0.8;
+}
+
+sup {
+    font-size: 17rem;
+}
+
+.weather {
+    margin: 0;
+    max-width: 250px;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.68;
+}
+
+.icon {
+    position: absolute;
+    right: -25%;
+    top: -50%;
+    width: 230px;
+    height: 106px;
+    z-index: -1;
+}
+
+.icon img {
+    display: block;
+}
+
+.future-weather {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day {
+    position: relative;
+    width: 160px;
+}
+
+.day img {
+    position: absolute;
+    width: 95px;
+    top: 0;
+    right: -25%;
+    z-index: -1;
+}
+
+.name {
+    font-size: 2.2rem;
+}
+
+.temp {
+    font-size: 8rem;
+    font-weight: 600;
+}
+
+.geolocation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-self: center;
+    width: 375px;
+    height: 480px;
+}
+
+.map {
+    -webkit-mask-image: url(./assets/map.png);
+    -webkit-mask-size: cover;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 398px;
+}
+
+.coordinate {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: none;
+    text-align: right;
+}

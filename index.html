@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <title>Fancy weather</title>
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="header">
+        <div class="controls">
+            <div class="control">
+                <button class="update"><span class="visually-hidden">Update</span></button>
+            </div>
+            <div class="control">
+                <button class="lang">RU</button>
+                <button class="lang" disabled>EN</button>
+            </div>
+            <div class="control">
+                <button class="measure">&deg;F</button>
+                <button class="measure" disabled>&deg;C</button>
+            </div>
+        </div>
+        <div class="search control">
+            <input class="search-area" type="search" name="search" id="search" placeholder="Search city or ZIP">
+            <button class="search-button" type="submit">Search</button>
+        </div>
+    </div>
+
+    <main>
+        <article>
+            <h1 class="location"></h1>
+            <p class="date"></p>
+            <div class="weather-today">
+                <div class="temperature"></div>
+                <p class="weather"></p>
+            </div>
+            </div>
+            <div class="future-weather">
+                <div class="day day_one"></div>
+                <div class="day day_two"></div>
+                <div class="day day_three"></div>
+            </div>
+        </article>
+
+        <section class="geolocation">
+            <div class="map" id="map"></div>
+            <p class="coordinate"></p>
+        </section>
+    </main>
+
+
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

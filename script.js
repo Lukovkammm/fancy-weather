@@ -56,37 +56,70 @@ function getDayToday() {
     return date;
 }
 
+const translations = {
+    ru: {
+        daysOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        units: {
+            metric: {
+                wind: 'м/с',
+            },
+            imperial: {
+                wind: 'миль/ч',
+            }
+        },
+        geoloc: {
+            lat: 'Широта',
+            lon: 'Долгота'
+        },
+        weather: {
+            feel: 'Ощущается',
+            wind: 'Ветер',
+            humidity: 'Влажность'
+        }
+    },
+
+    en: {
+        daysOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        units: {
+            metric: {
+                wind: 'm/s',
+            },
+            imperial: {
+                wind: 'mph',
+            }
+        },
+        geoloc: {
+            lat: 'Latitude',
+            lon: 'Longitude'
+        },
+        weather: {
+            feel: 'Feels like',
+            wind: 'Wind',
+            humidity: 'Humidity'
+        }
+    }
+}
+
 function getWeatherToday(lat, lon) {
     const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&lang=${language}&units=${units}&appid=9857b81397a6e8ba65a89d8219f81bdf`;
     return fetchRequest(url)
         .then(data => {
-            console.log(data)
             place.textContent = `${data.city.name}, ${data.city.country}`;
 
-            let wind = 'm/s';
-            if (language === 'en') {
-                units === 'metric' ? wind = 'm/s' : wind = 'mph';
+            let lat = translations[`${language}`]['geoloc']['lat'];
+            let lon = translations[`${language}`]['geoloc']['lon'];
+            coordinate.innerHTML = `
+                ${lat}: ${data.city.coord.lat}' <br>
+                ${lon}: ${data.city.coord.lon}'`;
 
-                coordinate.innerHTML = `
-                    Latitude: ${data.city.coord.lat}' <br>
-                    Longitude: ${data.city.coord.lon}'`;
-
-                weatherToday.innerHTML = `${data.list[0].weather[0].description} </br>
-                    Feels like: ${Math.round(data.list[0].main.feels_like)}&deg; </br>
-                    Wind: ${Math.round(data.list[0].wind.speed)} <span class="lower_case">${wind}</span></br>
-                    Humidity: ${data.list[0].main.humidity}%`
-            } else if (language === 'ru') {
-                units === 'metric' ? wind = 'м/с' : wind = 'миль/ч';
-
-                coordinate.innerHTML = `
-                    Широта: ${data.city.coord.lat}' <br>
-                    Долгота: ${data.city.coord.lon}'`;
-
-                weatherToday.innerHTML = `${data.list[0].weather[0].description} </br>
-                    Ощущается: ${Math.round(data.list[0].main.feels_like)}&deg; </br>
-                    Ветер: ${Math.round(data.list[0].wind.speed)} <span class="lower_case">${wind}</span> </br>
-                    Влажность: ${data.list[0].main.humidity}%`
-            }
+            let feel = `${translations[`${language}`]['weather']['feel']}`;
+            let wind = `${translations[`${language}`]['weather']['wind']}`;
+            let humidity = `${translations[`${language}`]['weather']['humidity']}`;
+            let unit = `${translations[`${language}`]['units'][`${units}`]['wind']}`;
+            weatherToday.innerHTML = `${data.list[0].weather[0].description} </br>
+                ${feel}: ${Math.round(data.list[0].main.feels_like)}&deg; </br>
+                ${wind} ${Math.round(data.list[0].wind.speed)} <span class="lower_case">${unit}</span></br>
+                ${humidity}: ${data.list[0].main.humidity}%`
 
             tempToday.innerHTML = `${Math.round(data.list[0].main.temp)}<sup>&deg;</sup> `;
 
@@ -101,37 +134,22 @@ function getFutureWeather(lat, lon) {
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=alerts&units=${units}&appid=9857b81397a6e8ba65a89d8219f81bdf`;
     return fetchRequest(url)
         .then(data => {
-            const daysOfWeek = {
-                en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-            };
             const date = getDayToday();
             let indexOfWeek = date.getDay() + 1;
-            console.log(date.getDay())
 
             const daysArr = Array.from(weatherFuture.children);
             let index = 1;
-            if (language === 'en') {
-                daysArr.forEach(day => {
-                    day.innerHTML = `
+            daysArr.forEach(day => {
+                day.innerHTML = `
                     <img src="http://openweathermap.org/img/wn/${data.daily[index].weather[0].icon}@2x.png">
-                    <p class="name">${daysOfWeek.en[indexOfWeek]}</p>
+                    <p class="name">${translations[`${language}`]['daysOfWeek'][`${indexOfWeek}`]}</p>
                     <p class="temp">${Math.round(data.daily[index].temp.day)}&deg;</p>`
-                    indexOfWeek >= 6 ? indexOfWeek = 0 : indexOfWeek++;
-                    index++;
-                })
-            } else if (language === 'ru') {
-                daysArr.forEach(day => {
-                    day.innerHTML = `
-                    <img src="http://openweathermap.org/img/wn/${data.daily[index].weather[0].icon}@2x.png">
-                    <p class="name">${daysOfWeek.ru[indexOfWeek]}</p>
-                    <p class="temp">${Math.round(data.daily[index].temp.day)}&deg;</p>`
-                    indexOfWeek >= 6 ? indexOfWeek = 0 : indexOfWeek++;
-                    index++;
-                })
-            }
+                indexOfWeek >= 6 ? indexOfWeek = 0 : indexOfWeek++;
+                index++;
+            })
         })
 }
+
 
 function getBackground() {
     const url = "https://api.unsplash.com/photos/random?orientation=landscape&per_page=1&query=nature&client_id=e2077ad31a806c894c460aec8f81bc2af4d09c4f8104ae3177bb809faf0eac17";
@@ -141,12 +159,13 @@ function getBackground() {
 
 function getMapPosition(lat, lon) {
     mapboxgl.accessToken = 'pk.eyJ1IjoibHVrb3ZrYSIsImEiOiJja2w2ajh2YjUyaHo3MnVtc2Njd2hqZngxIn0.zzYdA1jWodMx3KtCbdyaqw';
-    var map = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [lon, lat],
         zoom: 10
     });
+    console.log(map)
 }
 
 function geocoding() {
@@ -159,7 +178,7 @@ function geocoding() {
             lon = data.features[0].center[0];
             getWeatherToday(lat, lon);
             getFutureWeather(lat, lon);
-            getMapPosition(lat, lon);
+            getMapPosition(lat, lon)
         });
 }
 
@@ -198,7 +217,6 @@ controls.addEventListener('click', (e) => {
     }
     getWeatherToday(lat, lon);
     getFutureWeather(lat, lon);
-    getMapPosition(lat, lon);
 
     if (e.target.classList.contains('update')) getBackground();
 })
